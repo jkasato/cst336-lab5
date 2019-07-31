@@ -1,5 +1,9 @@
 // Installed Nodemon
-// npm i -g nodemon
+//  npm i -g nodemon
+
+// Images are from 
+//  https://unsplash.com
+
 //app.js
 const express = require("express");
 const app = express();
@@ -13,8 +17,7 @@ const tools = require("./tools.js");
 
 //routes
 app.get("/", async function (req, res) {
-    var imageURLs = await tools.getRandomImages("",1);
-    console.log("imageURLs using Promises:" + imageURLs);
+    var imageURLs = await tools.getRandomImages("", 1);
     res.render("index", { "imageURL": imageURLs });
 });//root route
 
@@ -24,10 +27,39 @@ app.get("/search", async function (req, res) {
     var imageURLs = await getRandomImages_promise(keyword, 9);
 
     console.log("imageURLs using Promises:" + imageURLs);
-    res.render("results", { "imageURLs": imageURLs });
+    res.render("results", { "imageURLs": imageURLs, "keyword": keyword });
 
 });//search
 
+app.get("/api/updateFavorites", function (req, res) {
+    var conn = mysql.createConnection({
+        host: '127.0.0.1',
+        port: 3306,
+        user: 'root',
+        password: 'sesame',
+        database: 'lab5'
+    })
+
+    //adds or removes a line item from the database depending on  the action
+    var sql;
+    var sqlParams;
+
+    if (req.query.action == "add") {
+        sql = "INSERT INTO lab5 (imageURL,keyword) VALUES(?,?)"
+        sqlParams = [req.query.imageURL, req.query.keyword];
+    }
+    else {
+        sql = "DELETE FROM lab5 WHERE imageURL=?"
+        sqlParams = [req.query.imageURL];
+    }
+    conn.connect(function (err) {
+        if (err) throw err;
+        conn.query(sql, sqlParams, function (err, result) {
+            if (err) throw err;
+        });//query
+    });//connect
+    res.send("it works");
+});//updateFavorites
 /**
 * return random image URLs from an API
 * @param string keyword-search term
