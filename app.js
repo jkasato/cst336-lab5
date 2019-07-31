@@ -139,12 +139,12 @@ function getRandomImages_promise(keyword, imageCount) {
 //     console.log("Express Server is Running...")
 // })
 
-//server listener to any request
-app.listen("5500", "127.0.0.1", function () {//port number,ip address
-    console.log("Express Server is Running...")
-});
-
-//for heroku deployment
-// app.listen(process.env.PORT,process.env.IP,function(){
-//     console.log("Running Express Server...");
+// //server listener to any request
+// app.listen("5500", "127.0.0.1", function () {//port number,ip address
+//     console.log("Express Server is Running...")
 // });
+
+// for heroku deployment
+app.listen(process.env.PORT,process.env.IP,function(){
+    console.log("Running Express Server...");
+});
