@@ -1,6 +1,7 @@
-const request=require('request');
+const request = require('request');
+const mysql=require('mysql');
 module.exports = {
-    
+
 
     /**
     * return random image URLs from an API
@@ -45,6 +46,21 @@ module.exports = {
                     console.log("error", error)
                 }
             });
-        })
+        })//promise
+    },//getrandomimages
+
+    /**
+     *creates a database connection
+     *@ return db connection 
+     * */
+    createConnection: function () {
+        var conn = mysql.createConnection({
+            host: '127.0.0.1',
+            port: 3306,
+            user: 'root',
+            password: 'sesame',
+            database: 'lab5'
+        });
+        return conn;
     }
 }

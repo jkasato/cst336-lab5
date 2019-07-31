@@ -15,6 +15,25 @@ $(document).ready(function () {
         }
     });
 
+
+    $(".keywordLink").on("click", function(){
+        // alert($(this).text());
+        $.ajax({
+            method: "get",
+            url: "/api/displayFavorites",
+            data: {
+                "keyword": $(this).text().trim(),
+                },
+            success: function(rows,status){
+                $("#favorites").html("");
+                rows.forEach(function(row){
+                    $("#favorites").append("<img src="+row.imageURL+"' width='200' height='200'>");
+                })
+            }
+
+        });//ajax
+    });
+
     function updateFavorite(action, imageURL) {
         $.ajax({
             method: "get",
@@ -25,6 +44,6 @@ $(document).ready(function () {
                 "action": action
                 }
 
-        })
-    }
+        });//ajax
+    }//updateFavorite
 });
