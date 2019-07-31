@@ -28,22 +28,20 @@ module.exports = {
         });
     }, //objects have commas
 
-    getRandomImages_promise: function (keyword, imageCount) {
+    getRandomImages: function (keyword, imageCount) {
         var requestURL = "https://api.unsplash.com/photos/random?query=" + keyword + "&count=" + imageCount + "&client_id=2efa248d55b9d227366470869adfd84bc6cf9800c569e22933499dff6c789a38"
+        //promise surrounds async code
         return new Promise(function (resolve, reject) {
             request(requestURL, function (error, response, body) {//this is Async
                 if (!error) {
                     var parsedData = JSON.parse(body);
                     var imageURLs = [];
-                    for (let i = 0; i < 9; i++) {
+                    for (let i = 0; i < imageCount; i++) {
                         imageURLs.push(parsedData[i].urls.regular);
                     }
-                    // console.log(imageURLs);
-                    // return imageURLs;
                     resolve(imageURLs);
                 }
                 else {
-                    // res.render("results", { "error": "Unable to access API" })
                     console.log("error", error)
                 }
             });
