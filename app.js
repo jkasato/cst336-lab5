@@ -25,7 +25,67 @@ app.get("/search", async function (req, res) {
 
     console.log("imageURLs using Promises:" + imageURLs);
     res.render("results", { "imageURLs": imageURLs });
+
 });//search
+
+/**
+* return random image URLs from an API
+* @param string keyword-search term
+* @param int imageCount-number of random imageURLs
+* @return array of image URLs
+**/
+function getRandomImages_cb(keyword, imageCount, callback) {
+    var requestURL = "https://api.unsplash.com/photos/random?query=" + keyword + "&count=" + imageCount + "&client_id=2efa248d55b9d227366470869adfd84bc6cf9800c569e22933499dff6c789a38"
+    request(requestURL, function (error, response, body) {//this is Async
+        if (!error) {
+            var parsedData = JSON.parse(body);
+            var imageURLs = [];
+            for (let i = 0; i < 9; i++) {
+                imageURLs.push(parsedData[i].urls.regular);
+            }
+            // console.log(imageURLs);
+            // return imageURLs;
+            callback(imageURLs);
+        }
+        else {
+            // res.render("results", { "error": "Unable to access API" })
+            console.log("error", error)
+        }
+    });
+}
+
+/**
+* return random image URLs from an API
+* @param string keyword-search term
+* @param int imageCount-number of random imageURLs
+* @return array of image URLs
+**/
+function getRandomImages_promise(keyword, imageCount) {
+    var requestURL = "https://api.unsplash.com/photos/random?query=" + keyword + "&count=" + imageCount + "&client_id=2efa248d55b9d227366470869adfd84bc6cf9800c569e22933499dff6c789a38"
+    return new Promise(function (resolve, reject) {
+        request(requestURL, function (error, response, body) {//this is Async
+            if (!error) {
+                var parsedData = JSON.parse(body);
+                var imageURLs = [];
+                for (let i = 0; i < 9; i++) {
+                    imageURLs.push(parsedData[i].urls.regular);
+                }
+                // console.log(imageURLs);
+                // return imageURLs;
+                resolve(imageURLs);
+            }
+            else {
+                // res.render("results", { "error": "Unable to access API" })
+                console.log("error", error)
+            }
+        });
+    })
+}
+
+//server listener
+// app.listen("5500","127.0.0.1",function(){
+//     console.log("Express Server is Running...")
+// })
 
 //server listener to any request
 app.listen("5500", "127.0.0.1", function () {//port number,ip address

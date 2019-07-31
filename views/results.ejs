@@ -10,7 +10,7 @@
 <% imageURLs.forEach(function(imageURL, i){ %>
     <%- (i%3==0)?'<br>':'' %>
     <img src='<%=imageURL%>' width='200' height='200'>
-
+    <img class='favoriteIcon' src="img/favorite_off.png" width='20'>
 <% }) %>
 
 <%include partials/footer.ejs%>
