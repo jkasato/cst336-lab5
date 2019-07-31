@@ -1,12 +1,32 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Image Search App</title>
+<!-- Format -->
+<!-- https://api.unsplash.com/PATH?client_id=ACCESS_KEY -->
+<!-- PATH=/photos/random
+ACCESS_KEY=2efa248d55b9d227366470869adfd84bc6cf9800c569e22933499dff6c789a38 -->
+
+<!-- Result -->
+<!-- https://api.unsplash.com/photos/random?client_id=2efa248d55b9d227366470869adfd84bc6cf9800c569e22933499dff6c789a38 -->
+
+<!-- Go to page->inspect element->network->refresh->file->url->regular url->go to url -->
+
+<!-- Add Parameter: Landscape
+https://images.unsplash.com/photo-1564275395502-633ebc2d9551?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjg0NDA1fQ&PARAMETER1&PARAMETER2 -->
+<!-- PARAMETER1=orientation=landscape -->
+
+<%include partials/header.ejs%>
+    <style>
+        body {background-image:url("<%=imageURL%>")}
+    </style>
 </head>
 
 <body>
     <main>
         <h1>Cool Images!</h1>
+        <form action="/search">
+            <input type="text" placeholder="Type Keyword" name="keyword"/><br><br>
+            <button>
+                Search
+            </button>
+        </form>
     </main>
-</body>
-</html>
+
+<%include partials/footer.ejs%>
