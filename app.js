@@ -4,6 +4,11 @@
 // Images are from 
 //  https://unsplash.com
 
+//todo
+//display the images like the other view
+//display with favorite icon
+//display in rows of 4
+
 //app.js
 const express = require("express");
 const app = express();
@@ -18,7 +23,7 @@ const tools = require("./tools.js");
 //routes
 app.get("/", async function (req, res) {
     var imageURLs = await tools.getRandomImages("", 1);
-    res.render("index", { "imageURL": imageURLs });
+    res.render("index", { "imageURLs": imageURLs });
 });//root route
 
 //search route
@@ -26,7 +31,7 @@ app.get("/search", async function (req, res) {
     var keyword = req.query.keyword;
     var imageURLs = await getRandomImages_promise(keyword, 9);
 
-    console.log("imageURLs using Promises:" + imageURLs);
+    // console.log("imageURLs using Promises:" + imageURLs);
     res.render("results", { "imageURLs": imageURLs, "keyword": keyword });
 
 });//search
@@ -55,14 +60,16 @@ app.get("/api/updateFavorites", function (req, res) {
     res.send("it works");
 });//updateFavorites
 
-app.get("/displayKeywords", function (req, res) {
+app.get("/displayKeywords", async function (req, res) {
+    var imageURLs = await tools.getRandomImages("", 1);
     var conn=tools.createConnection();
     var sql = "SELECT DISTINCT keyword FROM `lab5` ORDER BY keyword";
     conn.connect(function(err){
         if (err) throw err;
         conn.query(sql,function(err,result){
             if(err) throw err;
-            res.render("favorites",{"rows":result});
+            res.render("favorites",{"rows":result, "imageURLs":imageURLs});
+
             // console.log(result);
         });//query
     });
@@ -80,6 +87,7 @@ app.get("/api/displayFavorites",function(req,res){
         });//query
     });
 });//displayFavorites
+
 /**
 * return random image URLs from an API
 * @param string keyword-search term
@@ -140,11 +148,11 @@ function getRandomImages_promise(keyword, imageCount) {
 // })
 
 // //server listener to any request
-// app.listen("5500", "127.0.0.1", function () {//port number,ip address
-//     console.log("Express Server is Running...")
-// });
-
-// for heroku deployment
-app.listen(process.env.PORT,process.env.IP,function(){
-    console.log("Running Express Server...");
+app.listen("5500", "127.0.0.1", function () {//port number,ip address
+    console.log("Express Server is Running...")
 });
+
+// // for heroku deployment
+// app.listen(process.env.PORT,process.env.IP,function(){
+//     console.log("Running Express Server...");
+// });
