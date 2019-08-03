@@ -22,9 +22,23 @@ const request = require("request");
 const mysql = require("mysql");
 const tools = require("./tools.js");
 
-//roputes
+//routes
 //root route
 app.get("/", async function (req, res) {
+    var conn = tools.createConnection();
+    var sql =
+        "CREATE TABLE IF NOT EXISTS lab5(" +
+        "id int(11) NOT NULL AUTO_INCREMENT," +
+        "PRIMARY KEY (id)," +
+        "imageURL varchar(300)," +
+        "keyword varchar(25))" +
+        "ENGINE=InnoDB DEFAULT CHARSET=utf8"
+    conn.connect(function (err) {
+        if (err) throw err;
+        conn.query(sql, function (err, result) {
+            if (err) throw err;
+        });
+    });
     var imageURLs = await tools.getRandomImages("", 1);
     res.render("index", { "imageURLs": imageURLs });
 });//root route
@@ -42,19 +56,13 @@ app.get("/search", async function (req, res) {
 app.get("/displayKeywords", async function (req, res) {
     var imageURLs = await tools.getRandomImages("", 1);
     var conn = tools.createConnection();
-    var sql = 
-        "CREATE TABLE lab5("+
-            "id int(11) NOT NULL AUTO_INCREMENT,"+
-            "PRIMARY KEY (id),"+
-            "imageURL varchar(300),"+
-            "keyword varchar(25))"+
-            "ENGINE=InnoDB DEFAULT CHARSET=utf8;"+
-        "SELECT DISTINCT keyword FROM `lab5` ORDER BY keyword;";
-    conn.connect(function(err){
+    var sql =
+        "SELECT DISTINCT keyword FROM `lab5` ORDER BY keyword";
+    conn.connect(function (err) {
         if (err) throw err;
-        conn.query(sql,function(err,result){
-            if(err) throw err;
-            res.render("favorites.ejs",{"rows":result, "imageURLs":imageURLs});
+        conn.query(sql, function (err, result) {
+            if (err) throw err;
+            res.render("favorites.ejs", { "rows": result, "imageURLs": imageURLs });
         });//query
     });
 });//displayKeywords
@@ -68,11 +76,11 @@ app.get("/api/updateFavorites", function (req, res) {
     var sqlParams;
 
     if (req.query.action == "add") {
-        sql = "INSERT INTO lab5 (imageURL,keyword) VALUES(?,?);";
+        sql = "INSERT INTO lab5 (imageURL,keyword) VALUES(?,?)";
         sqlParams = [req.query.imageURL, req.query.keyword];
     }
     else {
-        sql = "DELETE FROM lab5 WHERE imageURL=?;";
+        sql = "DELETE FROM lab5 WHERE imageURL=?";
         sqlParams = [req.query.imageURL];
     }
     conn.connect(function (err) {
@@ -84,14 +92,14 @@ app.get("/api/updateFavorites", function (req, res) {
 });//updateFavorites
 
 
-app.get("/api/displayFavorites",function(req,res){
-    var conn=tools.createConnection();
-    var sql="SELECT imageURL FROM lab5 WHERE keyword=?;";
-    var sqlParams=[req.query.keyword];
-    conn.connect(function(err){
+app.get("/api/displayFavorites", function (req, res) {
+    var conn = tools.createConnection();
+    var sql = "SELECT imageURL FROM lab5 WHERE keyword=?";
+    var sqlParams = [req.query.keyword];
+    conn.connect(function (err) {
         if (err) throw err;
-        conn.query(sql,sqlParams,function(err,result){
-            if(err) throw err;
+        conn.query(sql, sqlParams, function (err, result) {
+            if (err) throw err;
             res.send(result);
         });//query
     });
@@ -151,17 +159,12 @@ function getRandomImages_promise(keyword, imageCount) {
     })
 }
 
-//server listener
-// app.listen("5500","127.0.0.1",function(){
-//     console.log("Express Server is Running...")
-// })
-
-// // //server listener to any request
+// //server listener to any request
 // app.listen("5500", "127.0.0.1", function () {//port number,ip address
 //     console.log("Express Server is Running...")
 // });
 
-// for heroku deployment
+// // for heroku deployment
 app.listen(process.env.PORT,process.env.IP,function(){
     console.log("Running Express Server...");
 });
