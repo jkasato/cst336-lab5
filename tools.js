@@ -72,3 +72,4 @@ module.exports = {
             database: heroku_e025c2bcd9ffba75c
         });
     }  
+}
