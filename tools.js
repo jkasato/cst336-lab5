@@ -64,13 +64,13 @@ module.exports = {
      *creates a database connection
      *@ return db connection 
      * */
-    // mysql://bcb7ee5e74bbbc:bcb1d451@us-cdbr-iron-east-02.cleardb.net/heroku_563ded4908d94fa?reconnect=true
+    mysql://bcb7ee5e74bbbc:bcb1d451@us-cdbr-iron-east-02.cleardb.net/heroku_563ded4908d94fa?reconnect=true
     createConnection: function () {
         var conn = mysql.createConnection({
             host: us-cdbr-iron-east-02.cleardb.net,
             user: bcb7ee5e74bbbc,
             password: bcb1d451,
-            database: heroku_563ded4908d94f
+            database: heroku_563ded4908d94fa
         });
     }  
 }
