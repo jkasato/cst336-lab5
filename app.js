@@ -32,7 +32,7 @@ app.get("/", async function (req, res) {
         "PRIMARY KEY (id)," +
         "imageURL varchar(300)," +
         "keyword varchar(25))" +
-        "ENGINE=InnoDB DEFAULT CHARSET=utf8"
+        "ENGINE=InnoDB DEFAULT CHARSET=utf8";
     conn.connect(function (err) {
         if (err) throw err;
         conn.query(sql, function (err, result) {
