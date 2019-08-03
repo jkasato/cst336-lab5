@@ -4,21 +4,14 @@
     <a id="searchLink" href="/"> Back to Search </a>
     <h1 id="favHeader"> Favorite Pics </h1>
 
+    <!-- Favorite Categories -->
     <% rows.forEach(function(row){ %>
     <a class="keywordLink"> <%= row['keyword'] %> </a>
     <% }) %>
 
     <hr>
 
-    <!-- <div id="favorites"> -->
-    <% imageURLs.forEach(function(imageURL, i){ %>
-        <%- (i%4==0)?'<br>':'' %>
-        <div id="favorites"></div>
-        <div class="imageContainerFav">
-            <img class="imageFav" src='<%=imageURL%>' width='200' height='200'>
-            <img class='favoriteIconFav' src="img/favorite_off.png" width='20'>
-        </div>
-    <% }) %>
-    
-    </div>
+    <!-- Display Favorites -->
+    <div id="favorites"></div>    
+
     <%include partials/footer.ejs%>

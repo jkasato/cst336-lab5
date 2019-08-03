@@ -1,15 +1,14 @@
 <%include partials/header.ejs%>
 
+<!-- search bar and button   -->
 <form action="/search">
     <input type="text" id="keyword" value="<%=keyword%>" placeholder="Type Keyword" name="keyword" />
-    <button>
-        Search
-    </button>
+    <button>Search</button>
     <a id="favLink" href="/displayKeywords"> See Favorites</a>
 </form>
 
 <% imageURLs.forEach(function(imageURL, i){ %>
-    <%- (i%3==0)?'<br>':'' %>
+    <%- (i%3==0)?'<br>' : '' %>
     <div class="imageContainer">
         <img class="image" src='<%=imageURL%>' width='200' height='200'>
         <img class='favoriteIcon' src="img/favorite_off.png" width='20'>

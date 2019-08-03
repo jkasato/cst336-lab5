@@ -1,7 +1,6 @@
 const request = require('request');
-const mysql=require('mysql');
+const mysql = require('mysql');
 module.exports = {
-
 
     /**
     * return random image URLs from an API
@@ -18,12 +17,9 @@ module.exports = {
                 for (let i = 0; i < 9; i++) {
                     imageURLs.push(parsedData[i].urls.regular);
                 }
-                // console.log(imageURLs);
-                // return imageURLs;
                 callback(imageURLs);
             }
             else {
-                // res.render("results", { "error": "Unable to access API" })
                 console.log("error", error)
             }
         });
@@ -49,18 +45,30 @@ module.exports = {
         })//promise
     },//getrandomimages
 
+    // /**
+    //  *creates a database connection
+    //  *@ return db connection 
+    //  * */
+    // createConnection: function () {
+    //     var conn = mysql.createConnection({
+    //         host: '127.0.0.1',
+    //         port: 5500,
+    //         user: 'root',
+    //         password: 'sesame',
+    //         database: 'lab5'
+    //     });
+    //     return conn;
+    // }
+
     /**
      *creates a database connection
      *@ return db connection 
      * */
     createConnection: function () {
         var conn = mysql.createConnection({
-            host: '127.0.0.1',
-            port: 3306,
-            user: 'root',
-            password: 'sesame',
-            database: 'lab5'
+            host: us - cdbr - iron - east - 03.cleardb.net,
+            user: b4ec28ac117d04,
+            password: e77c8602,
+            database: heroku_e025c2bcd9ffba75c
         });
-        return conn;
-    }
-}  
+    }  
