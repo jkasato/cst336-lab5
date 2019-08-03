@@ -1,13 +1,15 @@
+// Julie Asato
+// CST 336 Lab 5
+// Prof. Lara
+// July 6, 2019
+
+// This program uses the Express Node.js web application framework to serve as a web server and interact with the database. Routes were used to send the user to different the various webpages: root and displayKeywords. Pictures using the user input keyword were taken from the unsplash.com API and displayed on the webpage. Ajax was used to  update the favorite button and the database, deleting or inserting a new record which included the URL of the photo and the keyword used. Partials were used to create the header and footer. Embedded JavaScript was used to create HTML with JavaScript. Finally, the program uses the ClearDB MySQL Heroku add-on as the database that the favorites will be saved into. 
+
 // Installed Nodemon
 //  npm i -g nodemon
 
 // Images are from 
 // https://unsplash.com
-
-//todo
-//  display the images like the other view
-//  display with favorite icon
-//  display in rows of 4
 
 //app.js
 const express = require("express");
@@ -56,20 +58,6 @@ app.get("/displayKeywords", async function (req, res) {
         });//query
     });
 });//displayKeywords
-
-
-// app.get("/displayKeywords", async function (req, res) {
-//     var imageURLs = await tools.getRandomImages("", 1);
-//     var conn=tools.createConnection();
-//     var sql = "SELECT DISTINCT keyword FROM `lab5` ORDER BY keyword";
-//     conn.connect(function(err){
-//         if (err) throw err;
-//         conn.query(sql,function(err,result){
-//             if(err) throw err;
-//             res.render("favorites",{"rows":result, "imageURLs":imageURLs});
-//         });//query
-//     });
-// });//displayKeywords
 
 
 app.get("/api/updateFavorites", function (req, res) {
@@ -168,12 +156,12 @@ function getRandomImages_promise(keyword, imageCount) {
 //     console.log("Express Server is Running...")
 // })
 
-// //server listener to any request
-app.listen("5500", "127.0.0.1", function () {//port number,ip address
-    console.log("Express Server is Running...")
-});
-
-// // for heroku deployment
-// app.listen(process.env.PORT,process.env.IP,function(){
-//     console.log("Running Express Server...");
+// // //server listener to any request
+// app.listen("5500", "127.0.0.1", function () {//port number,ip address
+//     console.log("Express Server is Running...")
 // });
+
+// for heroku deployment
+app.listen(process.env.PORT,process.env.IP,function(){
+    console.log("Running Express Server...");
+});
